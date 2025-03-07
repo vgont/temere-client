@@ -13,7 +13,7 @@ export default function Helper({ room }: { room: WebSocket }) {
 
   useEffect(() => {
     console.log(hints)
-    if (game.hints.length === 5) {
+    if (hints.length === 5) {
       setDisabled(true)
     }
   }, [hints])
@@ -36,7 +36,12 @@ export default function Helper({ room }: { room: WebSocket }) {
 
   return( 
     <>
-      <h1 className="text-3xl font-bold mb-4">Helper</h1>
+      <div className="flex justify-between"> 
+        <h1 className="text-3xl font-bold mb-4">Helper</h1>
+        {game.word &&
+          <div>word: {word}</div>
+        }
+      </div> 
       {!game.word?
         <Form 
           handleSubmit={handleWordSubmit}
@@ -57,7 +62,10 @@ export default function Helper({ room }: { room: WebSocket }) {
             disabled={disabled}
             inputHandler={setHint}
           />
-          <h2 className="text-lg font-bold mt-2">Hints</h2>
+          <div className="flex justify-between">
+            <h2 className="text-lg font-bold mt-2">Hints</h2>
+            <p className="mt-auto">hints remaining: {5 - hints.length}</p>
+          </div>
           <div className="flex gap-4 w-full h-full flex-wrap">
             {hints.map(hint => 
               <p 
