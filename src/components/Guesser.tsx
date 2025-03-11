@@ -6,15 +6,18 @@ export default function Guesser({ room }: { room: WebSocket }) {
   const [guess, setGuess] = useState<string>("")
   const [isWordSet, setIsWordSet] = useState(false)
   const [hints, setHints] = useState<string[]>([])
+  const [isGuessed, setIsGuessed] = useState(false)
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       const parsed = JSON.parse(event.data)
 
       if (parsed.message) {
-        console.log(parsed.message)
         if (parsed.message === "word set") {
           setIsWordSet(true)
+        }
+        if (parsed.message === "You guessed it!") {
+          setIsGuessed(true)
         }
       }
       if (parsed.hints) {
@@ -29,6 +32,10 @@ export default function Guesser({ room }: { room: WebSocket }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     room.send(`try_guess:${guess}`)
+  }
+
+  if (isGuessed) {
+    return <p>You guessed</p>
   }
 
   return (
