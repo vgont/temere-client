@@ -30,20 +30,20 @@ export default function Helper({ room }: { room: WebSocket }) {
       setHints([...hints, hint])
       game.hints.push(hint)
       room.send(`add_hint:${hint}`)
-    } 
+    }
     setHint("")
   }
 
-  return( 
+  return (
     <>
-      <div className="flex justify-between"> 
+      <div className="flex justify-between">
         <h1 className="text-3xl font-bold mb-4">Helper</h1>
         {game.word &&
           <div>word: {word}</div>
         }
-      </div> 
-      {!game.word?
-        <Form 
+      </div>
+      {!game.word ?
+        <Form
           handleSubmit={handleWordSubmit}
           labelText="Set a word"
           buttonText="Set"
@@ -67,8 +67,8 @@ export default function Helper({ room }: { room: WebSocket }) {
             <p className="mt-auto">hints remaining: {5 - hints.length}</p>
           </div>
           <div className="flex gap-4 w-full h-full flex-wrap">
-            {hints.map(hint => 
-              <p 
+            {hints.map(hint =>
+              <p
                 className="text-lg text-black bg-gray-300 rounded px-2"
                 key={hint}
               >
